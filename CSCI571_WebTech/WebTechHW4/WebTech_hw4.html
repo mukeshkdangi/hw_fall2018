@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div style="position: center; display: flex;justify-content: center;padding-top: 20%;">
+	<div style="font-size: larger;font-weight: bold;text-align: center;"> Enter URL for Shipping Companies List JSON File <br /><br /><div>
+	 <form name="myform" method="POST" id="location">
+		<input type="text" name="URL" maxlength="255" value="containerlist.json" />
+		<br /><br />
+		<input style="background-color: whitesmoke;cursor: pointer;"  type="button" name="submit" value="Submit Query" onClick="viewJSON(this.form)" />
+	</form>
+</div>
+
+
+
+<script type="text/javascript">
+
+function viewJSON (formDetails) {
+	var url = formDetails.URL.value;
+	
+	function loadJSON(url) {
+		var jsonDoc;
+		var xmlhttp=new XMLHttpRequest();
+	 	xmlhttp.overrideMimeType("application/json");
+		xmlhttp.open("GET",url,false);
+		try{
+		xmlhttp.send();
+	   }   catch(e){
+				alert("Error : "+url+"  File doesn't exist.\n\n Please try again with correct file name");		
+		}
+		
+			if (xmlhttp.status === 200 && xmlhttp.readyState==4) { 
+					try{ 
+					jsonDoc=JSON.parse(xmlhttp.responseText);
+				}catch(e){
+					alert(url + ' file doesn\'t contain valid JSON object');
+				}
+					if(!jsonDoc || Object.keys(jsonDoc).length === 0 && jsonDoc.constructor === Object){
+						alert(url + ' file is seems empty');
+						return null;
+					}else if(!jsonDoc.Mainline.Table.Row){
+						alert(url + ' file contains no data. Only header Info found');
+						return null;
+					}
+				}else{
+					alert('Status code '+xmlhttp.status);
+				}
+				return jsonDoc;  
+		}
+		
+		
+	jsonDoc = loadJSON(url);
+
+	if (window.ActiveXObject) //if IE, simply execute script (due to async prop).
+	{ 
+		if (jsonDoc.parseError.errorCode != 0) {
+		var myErr = jsonDoc.parseError;
+		generateError(jsonDoc);
+		hWin = window.open("", "Error", "height=300,width=340");
+		hWin.document.write(html_text);
+		} 
+		else { 
+		if(!jsonDoc){
+			return;
+		}	
+		generateHTML(jsonDoc);
+		hWin = window.open("", "Assignment4", "height=800,width=1000");
+		hWin.document.write(html_text); 
+	    }
+	} else //else if FF, execute script once XML object has loaded
+		{ if(!jsonDoc){
+				return;
+			}
+		jsonDoc=generateHTML(jsonDoc);
+		hWin = window.open("", "Assignment4", "height=800,width=1000");
+		hWin.document.write(html_text); 
+	}
+		hWin.document.close();
+
+function generateHTML(jsonDoc)
+{ 
+	
+	headerInfo=jsonDoc.Mainline.Table.Header.Data;
+	html_text="<html><head><title>Top Container Shipping Companies</title></head><body>";
+	html_text+="<table border='2'>";
+	
+	//html_text+="<caption align='left'><h1>"+caption+"</h1></caption>";
+	html_text+="<tbody>";
+	html_text+="<tr>";
+	x=200; y=120;
+// output the headers
+	for(i=0;i<headerInfo.length;i++){ 
+		html_text+="<th>"+headerInfo[i]+"</th>"; 
+	} 
+
+	html_text+="</tr>";
+	var container_info = jsonDoc.Mainline.Table.Row;
+	if(container_info){
+		for(i=0;i<container_info.length;i++) { 
+				html_text+="<tr>"; //start a new row of the output table
+				var CompanyName = container_info[i].Company;
+				var HomePageURL = container_info[i].HomePage;
+				var HubsDetails = container_info[i].Hubs.Hub; // array of Hubs
+				var CompanyLogo = container_info[i].Logo;
+				var MarketPer   = container_info[i].Market;
+				var shipNumber  = container_info[i].Ships;
+
+				html_text+="<td>"+CompanyName+"</td>";
+				html_text+="<td>"+shipNumber+"</td>";
+				
+				//hub numbers 
+				html_text+="<td style='padding-top: 40px;'><ul>";
+				var count =0;
+				if(HubsDetails){
+					for(j=0;j<HubsDetails.length;j++){
+						if(HubsDetails[j]){
+							if(count++==0)html_text+="<li><b>"+HubsDetails[j]+"</b></li>";  
+							else html_text+="<li>"+HubsDetails[j]+"</li>";  
+						}
+					}
+				}
+				html_text+="</ul></td>";
+				html_text+="<td>"+MarketPer+"</td>";
+				html_text+="<td> <a href="+HomePageURL+ ">"+HomePageURL+"</a></td>";
+				html_text+="<td><img src='"+CompanyLogo+"'width='"+x+"' height='"+y+"'></td>";
+
+				html_text+="</tr>"; 	
+			}
+		}
+	
+		html_text+="</tbody>"; html_text+="</table>";
+		html_text+="</body></html>"; 
+  }
+}
+</script>
+
+
+</body>
+</html>

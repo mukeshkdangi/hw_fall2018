@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<title>BizOptima</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  overflow-x: hidden !important;
+}
+body > * {
+  max-width: 107% !important;
+}
+
+.container{
+	background-image: url("http://csci571.com/hw/hw3/images/lawyer.jpg");
+	height: 35pc;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+  width: 107%;
+	
+	
+}
+.container img{
+	resize: both;
+}
+
+header {
+  overflow: hidden;
+  padding: 20px 10px;
+}
+.header-right {
+  float: right;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  color: lightgrey;
+  padding-right: 10pc;
+  word-spacing: 2pc;
+}
+footer {
+  display: flex;
+  text-align: center;
+  color: black;
+  background-color: white;
+  right: 0;
+  left: 0;
+  padding: 1rem;
+  text-align: left;
+  padding-top: 5pc;
+}
+footer > div {
+  flex: 2; 
+}
+article {
+    -webkit-flex: 3;
+    -ms-flex: 3;
+    flex: 3;
+    background-color: #f1f1f1;
+    padding: 10px;
+}
+.content {
+    background-color: #073b5e;
+    width: 23pc;
+    height: 26pc;
+    color: white;
+    position: absolute;
+    top: 9pc;
+    left: 8pc;
+
+    
+}
+
+.button {
+    background-color: #fbdf00;
+    height: 40px;
+    margin-top: 1pc;
+    font-size: medium;
+    cursor: pointer;
+    border: none;
+    font-weight: lighter;
+    text-align: center;
+    table-layout: unset;
+    width: 165px;
+}
+
+.button:hover {
+   background-color: black;
+   color:white;
+}
+
+.buybutton {
+	background-color: #032f4e;
+    height: 45px;
+    cursor: pointer;
+    width: 8pc;
+    margin-top: 1pc;
+    color: white;
+    margin-bottom: 2pc;
+}
+
+.buybutton:hover {
+   background-color: black;
+   color:white;
+}
+
+.business{
+	font-size: xx-large;
+}
+.menu {
+	text-decoration: none;
+	text-align: center;
+	display: block;
+	float: left;
+	color: black;
+	padding-left: 10pc; 
+  font-family: verdana;
+  font-size: small;
+
+}
+.active {
+  background-color: #4CAF50;
+  color: white;
+}
+.menu:hover, a:hover {
+  color: black;
+}
+
+a {
+    text-decoration: none;
+}
+.about{
+   color: lightgrey; 
+}
+.projects{
+	color: lightgrey; 
+}
+.services{
+	color: lightgrey; 
+}
+
+.fContent {
+	color:grey;
+	padding-top: 1pc;
+	padding-right: 2pc;
+}
+
+.ceosays {
+	background-color: #f4f4f4;
+    font-size: medium;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100pc;
+    height: 22pc;
+    color: dimgrey;
+    font-family: verdana;
+}
+.socialandconact {
+	background-color: black;
+    font-size: large;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100pc;
+    height: 17pc;
+    color: white;
+    margin-top: 50px;
+    padding-top: 30px;
+    font-family: verdana;
+}
+.trymessage{
+	font-size: large;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100pc;
+    height: 70pc;
+    opacity: .8;
+    background-color: #083a5e !important;
+    color: white;
+    height: 30pc;
+    font-family: sans-serif;
+    font-size: x-large;
+
+}
+
+.pricediv {
+	font-size: large;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100pc;
+    padding-bottom: 57px;
+    opacity: .9;
+    background-color: #dedede; !important;
+    color: white;
+	
+}
+.priceafford{
+	  font-size: large;
+    text-align: center;
+    vertical-align: middle;    
+    opacity: .8;
+    color: black;
+    padding-top: 5pc;
+    font-family: verdana;
+}
+
+.glassimage{
+	background-image: url("http://csci571.com/hw/hw3/images/glasses.png");
+	height: 35pc;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+    max-width: 100%;
+    filter: opacity(40%); 
+}
+
+.pricing {
+    background-image: url("http://csci571.com/hw/hw3/images/glasses.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    background-attachment: fixed;
+    background-size: 150%;
+}
+
+.one, .two, .three { 
+    background-image: url(http://csci571.com/hw/hw3/images/grid.png);
+    background-color: white;
+    margin-top: 6pc;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex: 3;
+    margin-right: 7pc;
+    width: 22.33%;
+    text-align: center;
+    font-size: 18px;
+    
+    color: white;
+    display: inline-block;
+    font-family: verdana;
+    font-weight: lighter;
+    font-size: initial;
+	
+}
+
+
+.plan {
+	line-height: 4;
+    text-align: center;
+    font-size: inherit;
+    padding-top: 50px;
+    opacity: .9;
+    background-color: white;
+    color: black;
+    font-size: initial;
+}
+
+.planfeature {
+  	text-align: center;
+  	font-family: verdana;
+    line-height: 2.2;
+    opacity: .8;
+    background-color: white;
+    color: black;
+}
+.planprice {
+	line-height: 1;
+  font-family: verdana;
+  font-variant: ordinal;
+  font-size: x-large;
+  padding-top: 50px;
+}
+
+.tryBest {
+	  background-image: url("http://csci571.com/hw/hw3/images/notebook.jpg"); 
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100%;
+    background-position: center;
+}
+.social > a{
+	    margin-left: 46px;
+	    padding-right: 9px;
+	    padding-top: 1pc;
+}
+input::placeholder {
+   font-family:  verdana;  
+   font-size: large;
+}
+
+
+</style>
+
+</head>
+<body style="margin:0px">
+	
+ <header>
+  <a href="#menu" class="menu">MENU</a>
+  <div class="header-right">
+    <a  href="page2.html#about" target="_blank"  class ="about">About</a>
+    <a  href="page2.html#projects" target="_blank"  class ="projects" >Projects</a>
+    <a  href="page2.html#services" target="_blank"  class= "services">Services</a>
+  </div>
+  </header>
+<div class="container">
+ <div class ="content">
+  <table style ="margin-left:3pc;margin-top:3pc; font-family: verdana;">
+	  		<tr>
+		   		   <td>DON'T WAIT</td>
+	 	 	</tr>
+	  		<tr class="business">
+		  		   <td><div style="font-family: verdana;">IMPROVE <br/> YOUR BUSINESS <br/>TODAY!</div></td>
+	 		 </tr>
+	  			<tr>
+		 		   <td style ="font-style: oblique;color:#fbdf00;font-family: verdana;">- Get your hands on Biz Optima - </td>
+	 			 </tr>
+	 		 <tr>
+		    <td>
+		    	<form>
+ 				    <input style="height:40px;width:16pc;margin-top:1pc;" placeholder="Email" type="email" name="email"><br>
+ 				    <input class="button" type="button" value="SIGN UP FOR FREE!"/>
+  			   </form>
+            </td>
+
+	  </tr>
+ </table>
+</div>
+</div>
+ <footer>
+  <div style="padding-left: 2pc;">AMAZING FEATURE #1
+  	<div class="fContent">Lorem ipsum dolor sit amet. Suspendisse nec eros ut erat facilisis maximus. Consectetur adipiscng elit. Sed malesuada faucibus ex nec ultricies. Donec mattis egestas nisi non pretium. Vestibulum sit amet ornare, commodo orci ut, feugat lorem. In congue et leo in varius.</div>
+  </div>
+
+  <div>AMAZING FEATURE #2
+  	<div class="fContent" >Lorem ipsum dolor sit amet. Suspendisse nec eros ut erat facilisis maximus. Consectetur adipiscng elit. Sed malesuada faucibus ex nec ultricies. Donec mattis egestas nisi non pretium. Vestibulum sit amet ornare, commodo orci ut, feugat lorem. In congue et leo in varius.</div>
+  </div>  
+  <div>AMAZING FEATURE #3
+  	<div class="fContent" >Lorem ipsum dolor sit amet. Suspendisse nec eros ut erat facilisis maximus. Consectetur adipiscng elit. Sed malesuada faucibus ex nec ultricies. Donec mattis egestas nisi non pretium. Vestibulum sit amet ornare, commodo orci ut, feugat lorem. In congue et leo in varius.</div>
+  </div>
+ </footer> 
+ 
+ 		<div class="ceosays">
+				 	<div class="statement"> "I COULDN'T HAVE ASKED FOR MORE THAN THIS. 
+				 							BIZ OPTIMA IS THE NEXT KILLER APP."</div>
+				 	<div style ="font-size: small;"> <b>John Doe,</b> CEO & Founder, Biz Optima</div>
+			 	
+	 		</div>
+	<div class ="pricing">
+		<div class ="pricediv">
+			<div class="priceafford"> PRICES<br/>
+					<div style="color: #afbac4;">AFFORDABLE FOR EVERYONE</div>
+			</div>
+			<div class="one"> 
+				<div class="plan">BASIC PLAN </div>
+				<div class="planfeature"> 
+						Plan Amazing feature #1<br/>
+						Plan Amazing feature #2<br/>
+						Plan Amazing feature #3<br/>
+						Plan Amazing feature #4<br/><br/>
+					<div class="planprice"><center>$29.99<br/>Monthly</center></div>
+					<input class="buybutton" type="button" value="BUY NOW"/>
+				</div>	
+			</div>
+
+			<div class="two"> 
+				<div class="plan">STANDARD PLAN </div>
+				<div class="planfeature"> 
+						Plan Amazing feature #1<br/>
+						Plan Amazing feature #2<br/>
+						Plan Amazing feature #3<br/>
+						Plan Amazing feature #4<br/><br/>
+					<div class="planprice"><center>$39.99<br/>Monthly</center></div>
+					<input class="buybutton" type="button" value="BUY NOW"/>
+				</div>	
+			</div> 
+
+			<div class="three"> 
+				<div class="plan">CORPORATE PLAN </div>
+				<div class="planfeature"> 
+					Plan Amazing feature #1<br/>
+					Plan Amazing feature #2<br/>
+					Plan Amazing feature #3<br/>
+					Plan Amazing feature #4<br/><br/>
+					<div class="planprice"><center>$49.99<br/>Monthly</center></div>
+					<input class="buybutton" type="button" value="BUY NOW"/>
+				</div>
+			</div>
+	    </div> 
+    </div>
+    <div  class="tryBest">
+    	<div class="trymessage">TRY THE BEST APP IN THE MARKET<br/>
+    		 <div style="font-size:small;font-weight:500;">tell more why your software is amazing and why users need to sign up</div><br/>
+    		 <input class="button" type="button" value="TRY IT FOR FREE"/>
+
+    	</div>
+    </div>
+ 
+     <div  class="socialandconact">
+    	<div class="contact">
+    		<div>BIZ OPTIMA</div> <br/>
+    		 <div style="font-size:small;margin-top:-13px; color:#919194;">224 Grand Ave, Redono Beach, CA, 90278 310.555.1212 Ext. 3 for Business Needs</div><br/>
+    		 <div class="social">
+    		 	<a href="https://www.facebook.com" target="_blank" ><img src="http://csci571.com/hw/hw3/images/facebook.png"  width= "35"></a>
+    		 	<a href="https://www.twitter.com" target="_blank" ><img src="http://csci571.com/hw/hw3/images/twitter.png"  width= "35"></a>
+    		 	<a href="https://www.instagram.com" target="_blank" ><img src="http://csci571.com/hw/hw3/images/instagram.png" width= "35"></a>
+    		 	<a href="https://www.youtube.com" target="_blank" ><img src="http://csci571.com/hw/hw3/images/youtube.png"  width= "35"></a>
+    		 	<a href="https://www.googleplus.com" target="_blank" ><img src="http://csci571.com/hw/hw3/images/googleplus.png"width= "35"></a>
+
+    		 </div>
+    	</div>
+    	
+    </div>
+</body>
+</html>
