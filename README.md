@@ -1,4 +1,4 @@
-## Academic Assignments
+## Fall 2018 Academic Assignments
 ## CSCI585 : Database systems
 > Database system architecture; conceptual database models; semantic, object-oriented, logic-based, and relational databases; user and program interfaces; database system implementation; integrity, security, concurrency and recovery.
 
