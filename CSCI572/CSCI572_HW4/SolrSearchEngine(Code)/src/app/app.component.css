@@ -1,0 +1,82 @@
+
+.categoryclass{
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 33%;
+    flex: 0 0 33%;
+    max-width: 33%;
+}
+.table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: whitesmoke
+ }
+
+@media only screen and (max-width: 600px) {
+    .columnstyle .distancemedia  {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .unitclass {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+
+    }
+    .categoryclass{
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .columnstyle {flex: 0 0 100%;}
+}
+
+@media only screen and (min-width: 768px) {
+    .columnstyle {flex: 0 0 100%;}
+} 
+
+@media only screen and (min-width: 992px) {
+    .columnstyle {flex: 0 0 100%;}
+} 
+
+@media only screen and (min-width: 1200px) {
+    .columnstyle {flex: 0 0 100%;}
+}
+
+cardStyl{
+    margin-bottom: 1%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    line-height: 1.5;
+}
+
+.fade li {
+    transition: all 0.4s ease-out;
+    opacity: 0;
+    height: 2em;
+  }
+  .fade li.show {
+    opacity: 1;
+  }
+  #review-results {height: 100px;}
+
+.card {padding: 20px;margin: 10px;word-wrap: normal;}
+
+.spanpad {
+    display: inline-block;
+    height: 18px;
+}
+
+.review-time {
+    color: gray;
+    font-size: 14px;
+}
+
+.dropdown {
+    margin: 10px;
+}

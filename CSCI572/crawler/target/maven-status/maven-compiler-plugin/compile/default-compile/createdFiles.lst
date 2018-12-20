@@ -1,0 +1,4 @@
+com/nypost/crawler/ServletInitializer.class
+com/nypost/crawler/CrawlerApplication.class
+com/nypost/crawler/Controller.class
+com/nypost/crawler/NYPOSTCrawler.class

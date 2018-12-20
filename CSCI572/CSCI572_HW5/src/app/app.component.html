@@ -1,0 +1,135 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<div class="mukesh container" id="search-form-div">
+
+  <div class="dangi jumbotron col-sm-8 mukesh offset-sm-1">
+    <div class="searchwithname">
+
+      <form (ngSubmit)="onSubmit()" #searchForm=ngForm>
+        <div class="entertainment" id="form-header ">
+          <h3 style="text-align: center;">New York Post Search Engine</h3>
+        </div>
+
+        <div class="form-group row entertainment">
+          <label for="keyword" class="entertainment col-sm-2 col-form-label entertainment">Keyword <span class="required"
+              style="color:red;">*</span></label>
+          <div class="col-sm-8 entertainment">
+            <input pattern="[a-zA-Z ]*" placeholder="Enter Artist, Team or Event Name(eg. Lakers)" matInput
+              [matAutocomplete]="auto" (keydown)="searchAutoCompelete($event)" [ngClass]="{'form-control': true, 'is-invalid': keyword.invalid && (keyword.dirty || keyword.touched)}"
+              type="text" name="keyword" id="keyword" required noWhitespace [(ngModel)]="form.keyword" #keyword="ngModel">
+            <div class="invalid-feedback entertainment">Please enter a keyword.</div>
+          </div>
+        </div>
+
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let suggest of keywordList " [value]="suggest">
+            {{suggest}}
+          </mat-option>
+        </mat-autocomplete>
+
+
+        <div style="margin-top: 1rem;" class=" col-sm-10 row entertainment">
+          <legend class="entertainment col-form-label entertainment">Select Ranking Type<span class="required" style="color:red;">*</span>
+
+            <div class="col-sm-6 entertainment" style="float: right; ">
+
+              <div style="float: left;   " class="form-check entertainment">
+                <input class="form-check-input entertainment" [(ngModel)]="form.isUserInput" name="is_user_input" type="radio"
+                  checked [value]="false">
+                <label class="entertainment form-check-label" for="other">Lucene</label>
+              </div>
+
+              <div class="form-check entertainment" style="float: left;  padding-left: 30%;">
+                <input class="entertainment form-check-input" name="is_user_input" [(ngModel)]="form.isUserInput" type="radio"
+                  [value]="true">
+                <label class="form-check-label entertainment " for="here">PageRank</label>
+              </div>
+            </div>
+          </legend>
+        </div>
+        <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+          <p style="font-size: 20px; color: white">Mapping Doc ID to URL...</p>
+        </ngx-spinner>
+        <div style="margin-top: 2rem;" class="form-group entertainment row" id="search-btn-group">
+          <div class="col-sm-8 entertainment">
+            <button type="submit" class="btn btn-primary" id="search-btn" [disabled]="form.invalid || keyword.invalid">
+              <i class="material-icons">search</i>Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<div *ngIf="correctSpell" style="width: 55%;margin: auto 239px;" class="alert alert-info col-sm-10 row entertainment">
+  <div class=" col-sm-10 row entertainment"> Did you mean &nbsp;&nbsp;&nbsp; <div style="text-decoration: underline;font-style: italic;font-weight: bold;color: blue;cursor: pointer;"
+      (click)="form.keyword=correctSpell; onSubmit();"> {{correctSpell}} </div>
+  </div>
+</div>
+<div style="width: 55%;margin: auto 239px;" class="alert alert-warning col-sm-10 row entertainment" role="alert" *ngIf="searchResponse && searchResponse.numFound==0 && this.searchFinished">No
+  records.</div>
+<div id="info-div" *ngIf="searchResponse && searchResponse.docs.length>0" class="table-responsive container">
+  <div style="margin-left: 1%;">Results 1 - {{show}} of {{searchResponse.numFound}}</div>
+
+  <div style="margin-left: 1%;">Query - <b>{{stats.params.q}}</b> {{stats.QTime}} ms</div>
+  <div [@CustomeFadeInAnimation] style="padding-left: 1%;" class="card-block  bg-faded  bg-light cardStyl  carousel slide  carousel-fade"
+    *ngFor="let docInfo of searchResponse.docs | slice:0:show let i=index ">
+    <table class="table">
+      <tbody>
+        <tr *ngIf="docInfo.title">
+          <td style="padding: 0;">
+            <b>Title :</b> <a href="{{docInfo.generator[0]}}" target="_blank"> {{docInfo.title[0]}}</a>
+          </td>
+        </tr>
+
+        <tr *ngIf="docInfo.generator">
+          <td style="padding: 0;">
+            <b>URL :</b> <a style="padding: 0; color: #00ab47;" href="{{docInfo.generator[0]}}" target="_blank">
+              {{docInfo.generator[0]}}</a>
+          </td>
+        </tr>
+        <tr *ngIf="!docInfo.generator">
+          <td style="padding: 0;">
+            URL : N/A
+          </td>
+        </tr>
+        <tr *ngIf="docInfo.id">
+          <td style="padding: 0;"> <b>ID : </b>{{docInfo.id}}
+          </td>
+        </tr>
+
+        <tr *ngIf="docInfo.og_description">
+          <td style="padding: 0;">
+            <b> Description :</b> {{docInfo.og_description[0]}}
+          </td>
+        </tr>
+
+        <tr *ngIf="!docInfo.og_description">
+          <td style="padding: 0;">
+            <b>Description :</b> N/A
+          </td>
+        </tr>
+
+
+        <tr *ngIf="docInfo.stream_content_type.length>0">
+          <td style="padding: 0;">
+            <b>Snippet :</b> {{docInfo.stream_content_type[0]}}
+          </td>
+        </tr>
+
+        <tr *ngIf="docInfo.stream_content_type.length==0">
+          <td style="padding: 0;">
+            Snippet : N/A
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+
+  <button style="display: flex;margin: 0 auto;margin-bottom: 10%;" class="btn btn-primary" *ngIf="show<searchResponse.docs.length"
+    (click)="show = show+10"> Show More</button>
+  <button style="display: flex;margin: 0 auto;margin-bottom: 10%;" class="btn btn-primary" *ngIf="show>=20" (click)="show = 10">
+    Show Less</button>
+</div>
