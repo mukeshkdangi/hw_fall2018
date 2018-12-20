@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<!-- saved from url=(0058)http://webtechhw6.us-east-1.elasticbeanstalk.com/event.php -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+        .bold {
+                font-weight: bolder;
+                margin-top: 6px;
+        }
+        .heading{
+            font-weight: bolder;
+        }
+        .buyTktURL{
+            text-decoration: none;
+            color: black;
+        }
+
+        .buyTktURLOne{
+            text-decoration: none;
+            color: black;
+        }
+        .eventHeadingTitle{margin: auto auto;padding-bottom: 42px;font-weight: bolder;text-align: center;
+        }
+        .floatLeft {float: left;}
+        .marginTop {margin-top: 5px;}
+         #map {height: 25pc;width: 40pc;}
+        .travelMode{background-color: #e2dfdf;margin-left: 13px;margin-top: 19px;
+                cursor:pointer;}
+        .navbar {overflow: hidden;cursor: pointer;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        .navbar {
+                overflow: hidden;  font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .navbar a {float: left;font-size: 13px;color: white;text-align: center;
+                padding: 14px 16px;text-decoration: none;
+            }
+
+            .dropdown {float: left;overflow: hidden;
+            }
+
+            .dropdown .dropbtn {cursor: pointer;font-size: 16px;    border: none;
+                outline: none;color: white;padding: 14px 16px;background-color: inherit;
+                font-family: inherit;margin: 0;
+            }
+
+            .dropdown-content {display: none;position: absolute;
+                background-color: #f9f9f9;box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+            .NoRecordErr { background-color: whitesmoke;height: auto;width: 51%;margin: 0 auto;text-align: center;border-style: solid;border-width: thin;border-color: darkgrey;margin-top: 1%;font-weight: bold;}
+
+            .dropdown-content a {float: none;color: black;padding: 12px 16px;
+                text-decoration: none;display: block;text-align: left;
+            }
+
+            .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+            a:hover {color: grey;
+            }
+
+            typeHover:hover {
+                 color: grey;
+            }
+
+            .show {
+                display: block;
+            }
+            .venueImageDetails {
+                display:none;    width: 70%;    margin: 0 auto;    border-style: solid;border-width: thin;border-color: darkgrey;
+            }
+
+           
+
+    </style>
+
+<script type="text/javascript" src="./event.php_files/js">
+</script>
+
+<script type="text/javascript">  
+    var lat, lon, geoPoint;
+    var destLat, destLon;
+    var currentDrpId;
+    var mapId;
+    var goMapKey= "AIzaSyD1J5y9ghV6tNxV5PJVs-QOoaesM4TIxQs";
+    var upArrowImage ="http://csci571.com/hw/hw6/images/arrow_up.png";
+    var downArrowImage ="http://csci571.com/hw/hw6/images/arrow_down.png";
+               
+
+    function myFunction(id) {
+        currentDrpId = document.getElementById(id);
+        document.getElementById(id).classList.toggle("show");
+    }
+            
+    function updateMapParams(destLat, destLon){
+        this.destLat = destLat;
+        this.destLon = destLon;
+
+    }
+
+    window.onload = function(){
+          var divToHide = document.querySelectorAll(".hoverMap");
+          
+          document.onclick = function(elem){ 
+          console.log(elem); 
+             divToHide.forEach(function(e){
+                 if(elem && (elem.target.classList.length > 0  && 
+                    elem.target.classList[0] !==  'hoverMap' &&  
+                    elem.target.classList[0] !=='buyTktURL')||(elem.target.tagName=='BODY')){
+                    e.style.display = 'none';
+             }
+
+            });
+            
+          };
+        };
+  
+  
+        
+
+    function closeAllOpenMap(id){
+         var el;
+        document.querySelectorAll(".hoverMap").forEach(a=>a.style.display = "none");
+
+        if(id){
+           el = document.getElementById("hoverMap"+id);
+           el.style.display == 'block'; 
+
+           el2 = document.getElementById("hoverMap"+id+"Div");
+           //window.onclick = function(event) {
+             //   if (event.target.id !== el && event.target.id !== el2) {
+               //     el.style.display = "none";
+                //}
+            //}
+           
+        }
+
+        
+    }
+
+    function getVanueInfo(destLat, destLon, id){
+        if(document.getElementById("hoverMap"+id).style.display == 'block'){
+          document.getElementById("hoverMap"+id).style.display = 'none';   
+         return;
+        }
+        closeAllOpenMap(id);
+          
+        mapId = 'map'.concat(id);
+        document.getElementById("hoverMap"+id).style.display = 'block';
+        document.getElementById("hoverMap"+id).style.color = 'lightslategrey;';
+        myFunction(id);
+        updateMapParams(destLat,destLon);
+        initMap();
+    }
+
+    function toggle_visibility(id) {
+            initMap();
+        if(document.getElementById("venueDetails").style.display == 'block'){
+            document.getElementById("venueDetails").style.display = 'none';
+            document.getElementById("venu_info").innerHTML= "click to show venue info";
+            document.getElementById("arrowImg").src=downArrowImage;
+            return;
+        }
+            document.getElementById("venueDetails").style.display = 'block';
+            document.getElementById("venueImageDetails").style.display = 'none';
+            document.getElementById("venu_info").innerHTML= "click to hide venue info";
+            document.getElementById("arrowImg").src=upArrowImage;
+
+            document.getElementById("hideshowVenuePhoto").innerHTML= "click to show venue photo";
+            document.getElementById("hideshowPhoto").src=downArrowImage; 
+    }
+
+    function toggle_visibility_venu(id) {
+     if(document.getElementById("venueImageDetails").style.display == 'block'){
+        document.getElementById("venueImageDetails").style.display = 'none';
+        document.getElementById("hideshowVenuePhoto").innerHTML= "click to show venue photo";
+        document.getElementById("hideshowPhoto").src=downArrowImage;
+            return;
+        }
+
+        document.getElementById("venueImageDetails").style.display = 'block';
+        document.getElementById("venueDetails").style.display ='none';
+        document.getElementById("venu_info").innerHTML= "click to show venue info";
+        document.getElementById("arrowImg").src=downArrowImage;
+
+        document.getElementById("hideshowVenuePhoto").innerHTML= "click to hide venue photo";
+        document.getElementById("hideshowPhoto").src=upArrowImage;  
+    }
+
+    function updateParams(){
+            getCurrentLoc();
+    }
+    function toggleSearchButton(){
+        if(document.getElementById("Button").disabled){
+          document.getElementById("Button").disabled = false;
+        }
+        var value = document.querySelector('input[name="distanceFlag"]:checked').value;
+
+        if(value=="No"){
+            document.getElementById("locationDet").required = true;
+        }else {
+            document.getElementById("locationDet").required = false;
+            document.getElementById("locationDet").value = '';
+        }
+    }
+
+    function getCurrentLoc(){
+
+              
+       var locationDescription =  document.eventForm.locationDescription.value;
+        if(!locationDescription){
+            
+            var httpReq = new XMLHttpRequest();
+            httpReq.open('GET','http://ip-api.com/json',false);
+            httpReq.send();
+            var json = JSON.parse(httpReq.responseText);
+                lat = json.lat;
+                lon = json.lon;
+
+
+        } else {
+            httpReq = new XMLHttpRequest();
+            locationDescription = locationDescription.replace(/[^\w\s]/gi, '');
+            httpReq.open('GET','https://maps.googleapis.com/maps/api/geocode/json?address='+locationDescription+'&key=AIzaSyD1J5y9ghV6tNxV5PJVs-QOoaesM4TIxQs',false);
+            httpReq.send();
+            var json = JSON.parse(httpReq.responseText);
+                lat = json.results[0].geometry.location.lat;
+                lon = json.results[0].geometry.location.lng;
+
+        }
+        document.eventForm.lat.value= lat;
+        document.eventForm.lon.value= lon;  
+        
+        
+        if(lat && lat ){
+            document.getElementById("Button").disabled = false;
+        }
+    }
+
+
+    //Google Map 
+
+    var directionsDisplay;
+    var start;
+    var end;
+    var directionsService;
+    var map ;
+    
+    function initMap() {
+    var mapG = document.getElementById("map");
+    
+    getCurrentLoc();
+    
+    if(mapId &&mapId.includes("map")){
+            mapG =document.getElementById(mapId);
+        }
+
+      map = new google.maps.Map(mapG, {
+        center: {
+          lat: parseFloat(destLat),
+          lng:  parseFloat(destLon),
+          label:'',
+        },
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+      directionsDisplay = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: true
+      });
+      getDirections(map);
+    }
+
+    function moveMarker(map, marker, latlng) {
+      marker.setPosition(latlng);
+      map.panTo(latlng);
+    }
+
+    function autoRefresh(map, pathCoords) {
+      var i, route, marker;
+
+      route = new google.maps.Polyline({
+        path: [],
+        geodesic: true,
+        strokeColor: 'blue',
+        strokeOpacity: 1.0,
+        strokeWeight: 3,
+        editable: false,
+        map: map
+      });
+
+    
+      var marker = new google.maps.Marker({
+        position: start,
+        label:'B',
+        map: map,
+      });
+    }
+
+    function getDirections(map) {
+      directionsService = new google.maps.DirectionsService();
+      start = new google.maps.LatLng(parseFloat(lat), parseFloat(lon));
+      end = new google.maps.LatLng(parseFloat(destLat), parseFloat(destLon));
+
+      var marker = new google.maps.Marker({
+        position: end,
+        label:'',
+        map: map,
+      });
+      
+     
+        var request;
+        directionsService.route(request, function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+              directionsDisplay.setDirections(result);
+              autoRefresh(map, result.routes[0].overview_path);
+                }
+        });
+    }
+
+    function calcRoute(mode) {
+
+          var marker = new google.maps.Marker({
+            position: start,
+            label:'A',
+            map: map,
+            });
+
+        var marker = new google.maps.Marker({
+            position: end,
+            label:'B',
+            map: map,
+
+             });
+       
+        var selectedMode = mode;
+        var request = {
+                  origin: end,
+                  destination: start,
+                  travelMode: google.maps.TravelMode[selectedMode]
+              };
+              directionsService.route(request, function(response, status) {
+                if (status == 'OK') {
+                  directionsDisplay.setDirections(response);
+                }
+              });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initMap);
+
+
+</script>
+
+
+<script type="text/javascript" charset="UTF-8" src="./event.php_files/common.js"></script><script type="text/javascript" charset="UTF-8" src="./event.php_files/util.js"></script><script type="text/javascript" charset="UTF-8" src="./event.php_files/stats.js"></script><script type="text/javascript" charset="UTF-8" src="./event.php_files/AuthenticationService.Authenticate"></script></head>
+
+<body>
+     <form name="eventForm" method="post" style="margin: 0 auto;width: 618px;border: 3px solid #b9b3b3;background: whitesmoke;margin-top: 45px;">
+  <div style="text-align: center;font-size: xx-large;font-family: inherit;
+        font-style: italic;">
+        <div>Event Search</div>
+        <hr>
+        
+    </div>
+    
+      <div class="bold">Keyword: <input type="text" name="keyword" required="" value="">
+            <br>
+    </div>
+
+    <div class="bold">Category: <select name="category">
+            <option value="KZFzniwnSyZfZ7v7nE">default</option>
+            <option value="KZFzniwnSyZfZ7v7nJ">Music</option>
+            
+            <option value="KZFzniwnSyZfZ7v7nE">Sports</option>
+            
+            <option value="KZFzniwnSyZfZ7v7na">Arts &amp; Theatre</option>
+            <option value="KZFzniwnSyZfZ7v7nn">Film</option>
+            <option value="KZFzniwnSyZfZ7v7n1">Miscellaneous</option>
+        </select>
+    </div>
+
+
+    <div class="bold">Distance(miles):
+    
+    <input type="number" name="radius" value="10" required="">
+    
+    <input id="Yes" type="radio" onclick="toggleSearchButton()" name="distanceFlag" value="Yes" checked="">Here<br>
+    
+    <input id="No" type="radio" onclick="toggleSearchButton()" name="distanceFlag" value="No" style="margin-left: 252px;">
+    
+
+    <input id="locationDet" type="text" name="locationDescription" placeholder="location" value="">​​​​​​​​​​​​​​​​​​​​​​​​​​
+    <br><br>
+        
+    <input type="hidden" name="lat" value="33.7866">
+    <input type="hidden" name="lon" value="-118.2987">
+     <input type="hidden" name="geoPoint" value="
+     ">
+     </div>
+    
+    <input id="Button" type="submit" name="submit" value="Search" onclick="updateParams()">
+    <button name="clear" type="submit" value="Reset">Reset</button>
+
+ 
+</form>
+
+
+
+
+  
+
+</body></html>
